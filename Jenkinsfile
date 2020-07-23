@@ -15,8 +15,15 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo 'Testing...'
-                sh 'mvn test'
+              echo 'Testing...'
+              parallel(
+                a: {
+                  sh 'mvn test'
+                },
+                b: {
+                  echo 'Other types of parallel tests'
+                }
+              )
             }
         }
         stage('Deploy') {
