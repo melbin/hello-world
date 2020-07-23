@@ -15,14 +15,14 @@ pipeline {
         }
         stage('Test') {
             steps {
-              parallel {
+              parallel (
                 a: {
                   sh 'mvn test'
                 },
                 b: {
                   echo 'Other types of parallel tests'
                 }
-              }
+              )
             }
         }
         stage('Deploy') {
