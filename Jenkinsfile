@@ -13,13 +13,13 @@ pipeline {
                 archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             }
         }
-        stage('Test') {
+        stage('Parallel Tests') {
             steps {
               parallel (
-                a: {
+                JUnit: {
                   sh 'mvn test'
                 },
-                b: {
+                Contracts: {
                   echo 'Other types of parallel tests'
                 }
               )
