@@ -3,7 +3,7 @@ pipeline {
     agent any
     
     options { 
-      buildDiscarder(logRotator(numToKeepStr: '1'))
+      buildDiscarder(logRotator(numToKeepStr: '3', artifactNumToKeepStr:'3'))
       timeout(time: 1, unit: 'HOURS') 
       skipStagesAfterUnstable()
       retry(2)
@@ -34,6 +34,12 @@ pipeline {
               stage('Contracts') {
                 steps {
                   echo 'Other types of parallel tests'
+                  script {
+                    def browsers = ['chrome', 'firefox']
+                    for (int i = 0; i < browsers.size(); ++i) {
+                      echo "Testing the ${browsers[i]} browser"
+                    }
+                  }
                 }
               }
             }
