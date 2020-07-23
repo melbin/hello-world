@@ -24,15 +24,18 @@ pipeline {
             }
         }
         stage('Parallel Tests') {
-            steps {
-              parallel (
-                JUnit: {
+            failFast true
+            parallel {
+              stage('JUnit') {
+                steps {
                   sh 'mvn test'
-                },
-                Contracts: {
+                }
+              }
+              stage('Contracts') {
+                steps {
                   echo 'Other types of parallel tests'
                 }
-              )
+              }
             }
         }
         stage('Deploy') {
