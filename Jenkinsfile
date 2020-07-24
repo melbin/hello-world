@@ -44,7 +44,7 @@ pipeline {
               }
             }
         }
-        stage('Deploy') {
+        stage('Docker Deploy') {
             when {
               expression {
                 currentBuild.result == null || currentBuild.result == 'SUCCESS' 
@@ -58,6 +58,14 @@ pipeline {
                   image.push()
                 }
             }
+        }
+        stage('Kubernates Deploy') {
+          environment {
+            KUBECONFIG = "/tmp/configs/kubeconfig"
+          }
+          steps {
+            echo 'Deploying to kubernates PENDING...'
+          }
         }
     }
 }

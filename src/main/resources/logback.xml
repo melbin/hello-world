@@ -9,7 +9,7 @@
             </Pattern>
         </layout>
     </appender>
-	
+<!--  	
 	<appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
 	<destination>logstash:5000</destination>
 	<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
@@ -32,15 +32,16 @@
 		</providers>
 	</encoder>
 </appender>
+-->
 
     <!-- LOG everything at INFO level -->
     <root level="info">
-        <appender-ref ref="STASH" />
+     	<!-- <appender-ref ref="STASH" />  -->
         <appender-ref ref="Console" />
     </root>
     <!-- LOG "com.baeldung*" at TRACE level -->
     <logger name="com.baeldung" level="trace" additivity="false">
-        <appender-ref ref="STASH" />
+        <!-- <appender-ref ref="STASH" /> -->
         <appender-ref ref="Console" />
     </logger>
 </configuration>

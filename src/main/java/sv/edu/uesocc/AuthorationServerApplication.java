@@ -27,14 +27,14 @@ public class AuthorationServerApplication {
 //	}
 
 // For Kubernates solution
-/*
+
 	@Bean
 	public io.opentracing.Tracer initTracer() {
 		SamplerConfiguration samplerConfig = new SamplerConfiguration().withType("const").withParam(1);
 		ReporterConfiguration reporterConfig = ReporterConfiguration.fromEnv().withLogSpans(true);
 		return Configuration.fromEnv("hello-service").withSampler(samplerConfig).withReporter(reporterConfig).getTracer();
 	}
-*/	
+
 	public static void main(String[] args) {
 		SpringApplication.run(AuthorationServerApplication.class, args);
 	}
