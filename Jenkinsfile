@@ -52,6 +52,15 @@ pipeline {
             }
             steps {
                 echo 'Deploying....'
+                script {
+                  VERSION_INFORMATION = mavenSemanticVersion("readOnly":true)
+                  ARTIFACT_ID = VERSION_INFORMATION.artifactId
+                  PROJECT_VERSION = VERSION_INFORMATION.version
+                  SEMANTIC_VERSION = VERSION_INFORMATION.versionShort
+                  JAR_FILE_NAME = "target/hello-world.jar"
+                  image = docker.build("melbin/my-repo:${SEMANTIC_VERSION}","-f Dockerfile --build-arg JAR_FILE='${JAR_FILE_NAME}'")
+                  image.push()
+                }
             }
         }
     }
