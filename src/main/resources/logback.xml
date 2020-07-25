@@ -9,7 +9,7 @@
             </Pattern>
         </layout>
     </appender>
-<!--  	
+  	
 	<appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
 	<destination>logstash:5000</destination>
 	<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
@@ -32,7 +32,7 @@
 		</providers>
 	</encoder>
 </appender>
--->
+
 
     <!-- LOG everything at INFO level -->
     <root level="info">
