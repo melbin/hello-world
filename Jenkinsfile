@@ -54,7 +54,7 @@ pipeline {
                 echo 'Deploying....'
                 script {
                   JAR_FILE_NAME = "target/hello-world.jar"
-                  image = docker.build("melbin/my-repo:v1.0.9","-f Dockerfile --build-arg JAR_FILE='${JAR_FILE_NAME}' .")
+                  image = docker.build("melbin/hello-service:v1.1.1","-f Dockerfile --build-arg JAR_FILE='${JAR_FILE_NAME}' .")
                   image.push()
                 }
             }
