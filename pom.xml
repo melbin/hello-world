@@ -105,7 +105,7 @@
 -->
 
  <!-- JAEGER CONFIGURATION -->
-  
+ <!--  
 <dependency>
     <groupId>io.opentracing.contrib</groupId>
     <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
@@ -116,7 +116,7 @@
     <artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
     <version>2.0.0</version>
 </dependency>
-
+-->
 <!-- ZIPKIN WITH RABBITMQ DOCKER (Not compatible with Jaeger) -->
 <!--  
 	 	<dependency>

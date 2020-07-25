@@ -1,4 +1,4 @@
-<!-- <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <property name="LOGS" value="./logs" />
     <appender name="Console"
@@ -9,40 +9,13 @@
             </Pattern>
         </layout>
     </appender>
-  	
-	<appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-	<destination>logstash:5000</destination>
-	<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-		<providers>
-			<mdc />
-			<context />
-			<logLevel />
-			<loggerName />
-			<pattern>
-				<pattern>
-          {
-          "serviceName": "hello-service"
-          }
-        </pattern>
-			</pattern>
-			<threadName />
-			<message />
-			<logstashMarkers />
-			<stackTrace />
-		</providers>
-	</encoder>
-</appender>
 
-
-    LOG everything at INFO level
+    <!-- LOG everything at INFO level -->
     <root level="info">
-     	<appender-ref ref="STASH" /> 
         <appender-ref ref="Console" />
     </root>
-    LOG "com.baeldung*" at TRACE level
+    <!-- LOG "com.baeldung*" at TRACE level -->
     <logger name="com.baeldung" level="trace" additivity="false">
-        <appender-ref ref="STASH" />
         <appender-ref ref="Console" />
     </logger>
 </configuration>
- -->
