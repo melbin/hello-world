@@ -45,6 +45,12 @@ public class HomeController {
 		return "Welcome to the microservices world!!!! Profile: "+profile+" | pass: "+password;
 	}
 	
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public String test() {
+		logger.info("Test Method was called");
+		return "Congrats CI/CD Implemented Successfully!!!";
+	}
+	
 	@RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public String hi2(@RequestBody Person person) {
