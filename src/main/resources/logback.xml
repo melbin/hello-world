@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!-- <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <property name="LOGS" value="./logs" />
     <appender name="Console"
@@ -34,14 +34,15 @@
 </appender>
 
 
-    <!-- LOG everything at INFO level -->
+    LOG everything at INFO level
     <root level="info">
-     	<!-- <appender-ref ref="STASH" />  -->
+     	<appender-ref ref="STASH" /> 
         <appender-ref ref="Console" />
     </root>
-    <!-- LOG "com.baeldung*" at TRACE level -->
+    LOG "com.baeldung*" at TRACE level
     <logger name="com.baeldung" level="trace" additivity="false">
-        <!-- <appender-ref ref="STASH" /> -->
+        <appender-ref ref="STASH" />
         <appender-ref ref="Console" />
     </logger>
 </configuration>
+ -->
