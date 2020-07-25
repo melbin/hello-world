@@ -54,7 +54,7 @@ pipeline {
                 echo 'Deploying....'
                 script {
                   JAR_FILE_NAME = "target/hello-world.jar"
-                  image = docker.build("melbin/hello-world:v1.1.1","-f Dockerfile --build-arg JAR_FILE='${JAR_FILE_NAME}' .")
+                  image = docker.build("melbin/hello-world:v1.1.2","-f Dockerfile --build-arg JAR_FILE='${JAR_FILE_NAME}' .")
                   image.push()
                 }
             }
@@ -65,6 +65,12 @@ pipeline {
           }
           steps {
             echo 'Deploying to kubernates PENDING...'
+            script {
+              DEPLOY_FILE = "deployment.yaml"
+              SERVICE_FILE = "service.yaml"
+              sh "kubectl apply -f '${DEPLOY_FILE}'"
+              sh "kubectl apply -f '${SERVICE_FILE}'"
+            }
           }
         }
     }

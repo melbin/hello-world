@@ -1,0 +1,30 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: hello-deployment
+  labels: 
+    app: hello
+spec:
+  selector:
+    matchLabels:
+      app: hello
+  replicas: 3 # tells deployment to run 1 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: hello
+        version: v1
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+      - name: hello
+        image: melbin/hello-world:v1.1.0
+        env:
+          - name: JAEGER_ENDPOINT
+            value: http://jaeger-collector.istio-system.svc:14268/api/traces
+          - name: JAEGER_PROPAGATION
+            value: b3
+        ports:
+        - containerPort: 8080
+
