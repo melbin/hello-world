@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: hello
-        image: melbin/hello-world:v1.1.0
+        image: melbin/hello-world:v1.1.3
         env:
           - name: JAEGER_ENDPOINT
             value: http://jaeger-collector.istio-system.svc:14268/api/traces
