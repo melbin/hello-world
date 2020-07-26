@@ -29,7 +29,7 @@ pipeline {
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                 echo "SECRET ${SECRET}"
                 echo "USERNAME ${USERNAME}"
-                echo "VALUES-YAML ${VALUES}"
+                echo "VALUES.YAML ${VALUES}"
                 sh 'mvn -B -DskipTests clean package' 
                 archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             }
