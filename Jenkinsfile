@@ -9,7 +9,12 @@ pipeline {
       retry(1)
       parallelsAlwaysFailFast()
     }
- 
+
+    environment {
+      IMAGE = readMavenPom().getArtifactId()
+      VERSION = readMavenPom().getVersion()
+    }
+
     tools {
       maven 'M3'
     }
@@ -52,6 +57,8 @@ pipeline {
             }
             steps {
                 echo 'Deploying....'
+                echo "POM Version: ${env.VERSION}"
+                echo "POM Image: ${env.IMAGE}"
                 script {
                     sh 'echo "${REPOSITORY_NAME}"'
                     VERSION_INFORMATION = mavenSemanticVersion("readOnly": true)
