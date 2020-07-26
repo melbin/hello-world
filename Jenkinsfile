@@ -13,7 +13,6 @@ pipeline {
     environment {
       ARTIFACT_ID = readMavenPom().getArtifactId()
       PROJECT_VERSION = readMavenPom().getVersion()
-      LAST_COMMIT_AUTHOR = gitAuthor()
       ORIGIN_BRANCH_NAME = "${env.BRANCH_NAME}"
       ORIGIN_CHANGE_NAME = "${env.CHANGE_BRANCH}"
     }
@@ -27,9 +26,17 @@ pipeline {
             steps {
                 echo 'Building...'
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                echo "LastCommitAuthor: ${LAST_COMMIT_AUTHOR}"
                 echo "BranchName: ${ORIGIN_BRANCH_NAME}"
                 echo "ChangeBranch: ${ORIGIN_CHANGE_NAME}"
+                echo "${GIT_USER}"
+                echo "${GIT_AUTHOR_NAME}"
+                echo "${GIT_AUTHOR_EMAIL}"
+                echo "${GIT_COMMITTER_NAME}"
+                echo "${GIT_COMMITTER_EMAIL}"
+                echo "${GIT_COMMIT}"
+                echo "${GIT_URL}"
+                echo "${GIT_BRANCH}"
+
                 sh 'mvn -B -DskipTests clean package' 
                 archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             }
