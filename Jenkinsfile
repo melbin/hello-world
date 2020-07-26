@@ -53,8 +53,16 @@ pipeline {
             steps {
                 echo 'Deploying....'
                 script {
-                  JAR_FILE_NAME = "target/hello-world.jar"
-                  image = docker.build("melbin/hello-world:v1.1.5","-f Dockerfile --build-arg JAR_FILE='${JAR_FILE_NAME}' .")
+                  VERSION_INFORMATION = mavenSemanticVersion("readOnly": true)
+                  ARTIFACT_ID = VERSION_INFORMATION.artifactId
+                  PROJECT_VERSION = VERSION_INFORMATION.version
+                  SEMANTIC_VERSION = VERSION_INFORMATION.versionShort
+                  JAR_FILE_NAME = "target/${ARTIFACT_ID}-${PROJECT_VERSION}.jar"
+                  sh 'echo "${ARTIFACT_ID}"'
+                  sh 'echo "${PROJECT_VERSION}"'
+                  sh 'echo "${SEMANTIC_VERSION}"'
+                  sh 'echo "${JAR_FILE_NAME}"'
+                  image = docker.build("melbin/hello-world:'${SEMANTIC_VERSION}${RELEASE_PREFIX}'","-f Dockerfile --build-arg JAR_FILE='${JAR_FILE_NAME}' .")
                   image.push()
                 }
             }
