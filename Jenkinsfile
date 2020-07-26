@@ -58,13 +58,10 @@ pipeline {
             steps {
                 echo 'Deploying....'
                 script {
-                    sh 'echo "${ARTIFACT_ID}"'
-                    sh 'echo "${PROJECT_VERSION}"'
-                    sh 'echo "${JAR_FILE_NAME}"'
                     JAR_FILE_NAME = "target/${env.ARTIFACT_ID}-${PROJECT_VERSION}.jar"
                     image = docker.build("melbin/${env.ARTIFACT_ID}:'${PROJECT_VERSION}'","-f Dockerfile --build-arg JAR_FILE='${JAR_FILE_NAME}' .")
                     image.push()
-                    sh 'docker system prune -f'
+                    sh 'docker system prune --force --all --volumes'
                 }
             }
         }
@@ -73,12 +70,10 @@ pipeline {
             KUBECONFIG = "/tmp/configs/kubeconfig"
           }
           steps {
-            echo 'Deploying to kubernates PENDING...'
+            echo 'Deploying to kubernates'
             script {
-              DEPLOY_FILE = "deployment.yaml"
-              SERVICE_FILE = "service.yaml"
-              sh "kubectl apply -f '${DEPLOY_FILE}'"
-              sh "kubectl apply -f '${SERVICE_FILE}'"
+              sh "echo 'Upgrading Helm Chart'"
+              sh "helm upgrade --install ${env.ARTIFACT_ID} k8s/ -f k8s/values.yaml --set container.image=melbin/${env.ARTIFACT_ID}:${PROJECT_VERSION} --wait --kubeconfig ${KUBECONFIG}"
             }
           }
         }

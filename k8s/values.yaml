@@ -1,0 +1,13 @@
+name: hello
+replicaCount: 3
+container:
+  name: hello
+  image: melbin/hello-world:v1.1.8
+  port: 8080
+service:
+  protocol: TCP
+  port: 8080
+  targetPort: 8080
+  nodePort: 30000
+  selector: 
+    type: NodePort
