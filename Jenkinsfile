@@ -11,8 +11,9 @@ pipeline {
     }
 
     environment {
-      IMAGE = readMavenPom().getArtifactId()
-      VERSION = readMavenPom().getVersion()
+      ARTIFACT_ID = readMavenPom().getArtifactId()
+      PROJECT_VERSION = readMavenPom().getVersion()
+      SEMANTIC_VERSION = readMavenPom().getVersionShort()
     }
 
     tools {
@@ -59,6 +60,7 @@ pipeline {
                 echo 'Deploying....'
                 echo "POM Version: ${env.VERSION}"
                 echo "POM Image: ${env.IMAGE}"
+                echo "POM semantiVersion: ${SEMANTIC_VERSION}"
                 script {
                     sh 'echo "${REPOSITORY_NAME}"'
                     VERSION_INFORMATION = mavenSemanticVersion("readOnly": true)
