@@ -13,8 +13,6 @@ pipeline {
     environment {
       ARTIFACT_ID = readMavenPom().getArtifactId()
       PROJECT_VERSION = readMavenPom().getVersion()
-      GIT_AUTHOR_NAME=$(git --no-pager show -s --format='%an' $GIT_COMMIT)
-      GIT_AUTHOR_EMAIL=$(git --no-pager show -s --format='%ae' $GIT_COMMIT)
     }
 
     tools {
@@ -26,8 +24,6 @@ pipeline {
             steps {
                 echo 'Building...'
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                echo "${GIT_AUTHOR_EMAIL}"
-                echo "${GIT_AUTHOR_NAME}"
                 sh 'mvn -B -DskipTests clean package' 
                 archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             }
