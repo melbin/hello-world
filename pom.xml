@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>sv.edu.uesocc</groupId>
 	<artifactId>hello-world</artifactId>
-	<version>1.0.0_0-SNAPSHOT</version>
+	<version>v1.1.6</version>
 	<name>Authoration-Server</name>
 	<description>Microservice build for Docker Test</description>
 
