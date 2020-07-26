@@ -28,7 +28,7 @@ pipeline {
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                 echo "BranchName: ${ORIGIN_BRANCH_NAME}"
                 echo "ChangeBranch: ${ORIGIN_CHANGE_NAME}"
-                echo "${GIT_USER}"
+                // echo "${GIT_USER}"
                 echo "${GIT_AUTHOR_NAME}"
                 echo "${GIT_AUTHOR_EMAIL}"
                 echo "${GIT_COMMITTER_NAME}"
