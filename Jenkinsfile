@@ -52,6 +52,10 @@ pipeline {
             }
             steps {
                 echo 'Deploying....'
+                withMavenSettings() {
+                  mavenSemanticVersion(addGit: true)
+                  mavenSemanticVersion(addGit: true, buildType: "build", releaseType: "release")
+                }
                 script {
                   VERSION_INFORMATION = mavenSemanticVersion("readOnly": true)
                   ARTIFACT_ID = VERSION_INFORMATION.artifactId
