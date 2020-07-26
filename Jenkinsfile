@@ -76,7 +76,7 @@ pipeline {
             script {
               DEPLOY_FILE = "deployment.yaml"
               SERVICE_FILE = "service.yaml"
-              sh "kubectl apply -f '${DEPLOY_FILE}'"
+              sh "kubectl apply -f '${DEPLOY_FILE}' -e image = ${JAR_FILE_NAME}"
               sh "kubectl apply -f '${SERVICE_FILE}'"
             }
           }
