@@ -1,6 +1,6 @@
 FROM openjdk:8u212-jre-alpine3.9
 ARG JAR_FILE
-ADD target/${JAR_FILE} app.jar
+ADD ${JAR_FILE} app.jar
 EXPOSE 8080
 ENV SPRING_APPLICATION_JSON='{"db.password":"test2"}'
 ENV JAVA_OPTS=""
