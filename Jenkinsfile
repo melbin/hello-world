@@ -76,17 +76,17 @@ pipeline {
             sh "helm upgrade --install ${env.ARTIFACT_ID} k8s/ -f k8s/values.yaml --set container.image=melbin/${env.ARTIFACT_ID}:${PROJECT_VERSION} --wait --kubeconfig ${KUBECONFIG}"
             script {
               for (int i = 0; i < 10; i++) {
-                  SERVER_STATUS = sh(returnStdout: true, script: "curl -X GET https://www.bancocuscatlan.com:30317/hello-world/v1.0.0/test -H 'accept: */*' -s -o health -w '%{http_code}' --max-time 60").trim()
+                  SERVER_STATUS = sh(returnStdout: true, script: "curl -X GET http://104.131.1.178:30000/hello-world/v1.0.0/test -H 'accept: */*' -s -o health -w '%{http_code}' --max-time 60").trim()
                   echo "HTTP-${SERVER_STATUS}"
                   if (!SERVER_STATUS.contains('200')) {
-                      echo "We can't reach out the server https://www.bancocuscatlan.com:30317"
+                      echo "We can't reach out the server http://104.131.1.178:30000"
                       sleep 5
                   }else{
                       break;
                   }
               }
               if (!SERVER_STATUS.contains('200')) {
-                  error("We can't reach out the server https://www.bancocuscatlan.com:30317")
+                  error("We can't reach out the server http://104.131.1.178:30000")
               }
             }
           }
