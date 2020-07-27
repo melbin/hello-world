@@ -6,7 +6,7 @@ pipeline {
       retry(1)
       parallelsAlwaysFailFast()
     }
-    agent { node {label 'docker'} }
+    agent { label 'docker' }
     environment {
       ARTIFACT_ID = readMavenPom().getArtifactId()
       PROJECT_VERSION = readMavenPom().getVersion()
