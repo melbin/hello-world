@@ -79,5 +79,34 @@ pipeline {
                 }
             }
         }
+        stage('Kubernates Deploy') {
+          agent { label 'docker' }
+          environment {
+            ARTIFACT_ID = readMavenPom().getArtifactId()
+            PROJECT_VERSION = readMavenPom().getVersion()
+            KUBECONFIG = "/tmp/configs/kubeconfig"
+          }
+          steps {
+            echo 'Deploying to kubernates'
+            sh "echo 'Upgrading Helm Chart'"
+            sh 'sed -i "/appVersion/c\\appVersion: ${PROJECT_VERSION}" k8s/Chart.yaml'
+            sh "helm upgrade --install ${env.ARTIFACT_ID} k8s/ -f k8s/values.yaml --set container.image=melbin/${env.ARTIFACT_ID}:${PROJECT_VERSION} --wait --kubeconfig ${KUBECONFIG}"
+            script {
+              for (int i = 0; i < 10; i++) {
+                  SERVER_STATUS = sh(returnStdout: true, script: "curl -X GET http://104.131.1.178:30000/hello-world/v1.0.0/test -H 'accept: */*' -s -o health -w '%{http_code}' --max-time 60").trim()
+                  echo "HTTP-${SERVER_STATUS}"
+                  if (!SERVER_STATUS.contains('200')) {
+                      echo "We can't reach out the server http://104.131.1.178:30000"
+                      sleep 5
+                  }else{
+                      break;
+                  }
+              }
+              if (!SERVER_STATUS.contains('200')) {
+                  error("We can't reach out the server http://104.131.1.178:30000")
+              }
+            }
+          }
+        }
     }
 }
