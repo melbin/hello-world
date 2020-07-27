@@ -7,13 +7,13 @@ pipeline {
       // retry(1)
       // parallelsAlwaysFailFast()
     // }
-    environment {
-      ARTIFACT_ID = readMavenPom().getArtifactId()
-      PROJECT_VERSION = readMavenPom().getVersion()
-      // SECRET = vault path: 'secrets', key: 'password'
-      // USERNAME = vault path: 'secrets', key: 'username'
-      // VALUES = vault path: 'secrets', key: 'values-yaml'
-    }    
+    // environment {
+    //   ARTIFACT_ID = readMavenPom().getArtifactId()
+    //   PROJECT_VERSION = readMavenPom().getVersion()
+    //   // SECRET = vault path: 'secrets', key: 'password'
+    //   // USERNAME = vault path: 'secrets', key: 'username'
+    //   // VALUES = vault path: 'secrets', key: 'values-yaml'
+    // }    
     stages {
         stage('Maven Execution') {
           agent {
