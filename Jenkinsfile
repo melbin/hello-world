@@ -18,20 +18,30 @@ pipeline {
       // VALUES = vault path: 'secrets', key: 'values-yaml'
     }
 
-    tools {
-      maven 'M3'
-    }
+    // tools {
+    //   maven 'M3'
+    // }
     
     stages {
-        stage('Build') {
-            steps {
-                echo 'Building...'
-                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                // echo "SECRET ${SECRET}"
-                // echo "USERNAME ${USERNAME}"
-                // echo "VALUES-YAML ${VALUES}"
-                sh 'mvn -B -DskipTests clean package' 
-                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+        stage('Maven Execution') {
+            agent {
+                docker {
+                    image 'maven:3-alpine'
+                    args '-v /root/.m2:/root/.m2'
+                }
+            }
+            stages {
+              stage('Build') {
+                steps {
+                    echo 'Building...'
+                    echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+                    // echo "SECRET ${SECRET}"
+                    // echo "USERNAME ${USERNAME}"
+                    // echo "VALUES-YAML ${VALUES}"
+                    sh 'mvn -B -DskipTests clean package' 
+                    archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+                }
+              }
             }
         }
         stage('Parallel Tests') {
