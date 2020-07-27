@@ -1,6 +1,7 @@
 pipeline {
 
-    agent any
+    // agent any
+    agent { node {label 'docker'} }
     
     options { 
       buildDiscarder(logRotator(numToKeepStr: '3', artifactNumToKeepStr:'3'))
