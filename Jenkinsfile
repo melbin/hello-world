@@ -6,7 +6,8 @@ pipeline {
       retry(1)
       parallelsAlwaysFailFast()
     }
-    agent { label 'docker' }
+    // agent { label 'docker' }
+    agent none
     environment {
       ARTIFACT_ID = readMavenPom().getArtifactId()
       PROJECT_VERSION = readMavenPom().getVersion()
@@ -62,6 +63,11 @@ pipeline {
               expression {
                 currentBuild.result == null || currentBuild.result == 'SUCCESS' 
               }
+            }
+            agent { label 'docker' }
+            environment {
+              ARTIFACT_ID = readMavenPom().getArtifactId()
+              PROJECT_VERSION = readMavenPom().getVersion()
             }
             steps {
                 echo 'Deploying....'
