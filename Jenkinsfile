@@ -63,6 +63,10 @@ pipeline {
                 currentBuild.result == null || currentBuild.result == 'SUCCESS' 
               }
             }
+            environment {
+              ARTIFACT_ID = readMavenPom().getArtifactId()
+              PROJECT_VERSION = readMavenPom().getVersion()
+            }
             steps {
                 echo 'Deploying....'
                 script {
