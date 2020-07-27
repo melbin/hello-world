@@ -24,7 +24,7 @@ pipeline {
                 // echo "USERNAME ${USERNAME}"
                 // echo "VALUES-YAML ${VALUES}"
                 sh 'mvn -B -DskipTests clean package'
-                // archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
               }
             }
             stage('Parallel Tests') {
@@ -67,7 +67,8 @@ pipeline {
                     JAR_FILE_NAME = "target/${env.ARTIFACT_ID}-${PROJECT_VERSION}.jar"
                     image = docker.build("melbin/${env.ARTIFACT_ID}:'${PROJECT_VERSION}'","-f Dockerfile --build-arg JAR_FILE='${JAR_FILE_NAME}' .")
                     image.push()
-                    sh 'docker system prune --force --all --volumes'
+                    sh 'docker image rm -f ${JAR_FILE_NAME}'
+                    // sh 'docker system prune --force --all --volumes'
                 }
             }
         }
