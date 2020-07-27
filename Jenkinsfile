@@ -13,9 +13,9 @@ pipeline {
     environment {
       ARTIFACT_ID = readMavenPom().getArtifactId()
       PROJECT_VERSION = readMavenPom().getVersion()
-      SECRET = vault path: 'secrets', key: 'password'
-      USERNAME = vault path: 'secrets', key: 'username'
-      VALUES = vault path: 'secrets', key: 'values-yaml'
+      // SECRET = vault path: 'secrets', key: 'password'
+      // USERNAME = vault path: 'secrets', key: 'username'
+      // VALUES = vault path: 'secrets', key: 'values-yaml'
     }
 
     tools {
@@ -27,9 +27,9 @@ pipeline {
             steps {
                 echo 'Building...'
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                echo "SECRET ${SECRET}"
-                echo "USERNAME ${USERNAME}"
-                echo "VALUES-YAML ${VALUES}"
+                // echo "SECRET ${SECRET}"
+                // echo "USERNAME ${USERNAME}"
+                // echo "VALUES-YAML ${VALUES}"
                 sh 'mvn -B -DskipTests clean package' 
                 archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             }
