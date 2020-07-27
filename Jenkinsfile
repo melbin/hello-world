@@ -1,11 +1,11 @@
 pipeline {
     agent none
     options { 
-      buildDiscarder(logRotator(numToKeepStr: '3', artifactNumToKeepStr:'3'))
-      timeout(time: 1, unit: 'HOURS')
-      skipStagesAfterUnstable()
-      retry(1)
-      parallelsAlwaysFailFast()
+      // buildDiscarder(logRotator(numToKeepStr: '3', artifactNumToKeepStr:'3'))
+      // timeout(time: 1, unit: 'HOURS')
+      // skipStagesAfterUnstable()
+      // retry(1)
+      // parallelsAlwaysFailFast()
     }
     environment {
       ARTIFACT_ID = readMavenPom().getArtifactId()
