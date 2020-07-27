@@ -31,7 +31,7 @@ pipeline {
                 // echo "USERNAME ${USERNAME}"
                 // echo "VALUES-YAML ${VALUES}"
                 sh 'mvn -B -DskipTests clean package'
-                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+                // archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
               }
             }
           }
