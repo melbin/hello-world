@@ -57,5 +57,21 @@ pipeline {
             }
           }
         }
+        stage('Docker Deploy') {
+            when {
+              expression {
+                currentBuild.result == null || currentBuild.result == 'SUCCESS' 
+              }
+            }
+            steps {
+                echo 'Deploying....'
+                script {
+                    JAR_FILE_NAME = "target/${env.ARTIFACT_ID}-${PROJECT_VERSION}.jar"
+                    image = docker.build("melbin/${env.ARTIFACT_ID}:'${PROJECT_VERSION}'","-f Dockerfile --build-arg JAR_FILE='${JAR_FILE_NAME}' .")
+                    image.push()
+                    sh 'docker system prune --force --all --volumes'
+                }
+            }
+        }
     }
 }
