@@ -23,7 +23,7 @@ pipeline {
             }
           }
           stages {
-            stage('Maven Build') { 
+            stage('Maven Build') {
               steps {
                 echo 'Building...'
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
@@ -32,6 +32,27 @@ pipeline {
                 // echo "VALUES-YAML ${VALUES}"
                 sh 'mvn -B -DskipTests clean package'
                 archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+              }
+            }
+            stage('Parallel Tests') {
+              failFast true
+              parallel {
+                stage('JUnit') {
+                  steps {
+                    sh 'mvn test'
+                  }
+                }
+                stage('Contracts') {
+                  steps {
+                    echo 'Other types of parallel tests'
+                    script {
+                      def browsers = ['chrome', 'firefox']
+                      for (int i = 0; i < browsers.size(); ++i) {
+                        echo "Testing the ${browsers[i]} browser"
+                      }
+                    }
+                  }
+                }
               }
             }
           }
