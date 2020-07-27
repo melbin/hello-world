@@ -6,14 +6,14 @@ pipeline {
       retry(1)
       parallelsAlwaysFailFast()
     }
-    agent none
-    // environment {
-    //   ARTIFACT_ID = readMavenPom().getArtifactId()
-    //   PROJECT_VERSION = readMavenPom().getVersion()
-    //   // SECRET = vault path: 'secrets', key: 'password'
-    //   // USERNAME = vault path: 'secrets', key: 'username'
-    //   // VALUES = vault path: 'secrets', key: 'values-yaml'
-    // }    
+    agent { node {label 'docker'} }
+    environment {
+      ARTIFACT_ID = readMavenPom().getArtifactId()
+      PROJECT_VERSION = readMavenPom().getVersion()
+      // SECRET = vault path: 'secrets', key: 'password'
+      // USERNAME = vault path: 'secrets', key: 'username'
+      // VALUES = vault path: 'secrets', key: 'values-yaml'
+    }
     stages {
         stage('Maven Execution') {
           agent {
@@ -62,10 +62,6 @@ pipeline {
               expression {
                 currentBuild.result == null || currentBuild.result == 'SUCCESS' 
               }
-            }
-            environment {
-              ARTIFACT_ID = readMavenPom().getArtifactId()
-              PROJECT_VERSION = readMavenPom().getVersion()
             }
             steps {
                 echo 'Deploying....'
