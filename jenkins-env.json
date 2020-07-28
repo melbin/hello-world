@@ -1,7 +1,7 @@
 {
     "default": {
         "enviroment": {
-            "REPOSITORY_NAME": "samples-micro-test",
+            "REPOSITORY_NAME": "samples-micro-test-2",
             "HEALTH_CHECK": "samples-micro-test/management/health"
         }
     },
