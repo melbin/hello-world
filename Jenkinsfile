@@ -20,14 +20,13 @@ pipeline {
               environment {
                 def config = readJSON file: "jenkins-env-${BRANCH_NAME}.json"
                 release_prefix = "${config.RELEASE_PREFIX}"
-                SECRET = vault path: 'secrets/melbin/hello-world', key: 'username'
               }
               steps {
                 echo 'Building...'
                 echo "RELEASE_PREFIX : ${release_prefix}"
-                echo "SECRET ${SECRET}"
-                echo "USERNAME ${USERNAME}"
-                echo "VALUES-YAML ${VALUES}"
+                withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[path: 'secret/melbin/hello-world', secretValues: [[vaultKey: 'password']]]]) {
+                    echo "Password from Vault: ${password}"
+                }
                 echo "Test ${MELBIN.TEST.SHOULD_FAIL}"
                 sh 'mvn -B -DskipTests clean package'
                 archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
