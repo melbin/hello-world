@@ -19,19 +19,15 @@ pipeline {
             stage('Maven Build') {
               environment {
                 def config = readJSON file: "jenkins-env-${BRANCH_NAME}.json"
-                repository = "${config.REPOSITORY_NAME}"
                 release_prefix = "${config.RELEASE_PREFIX}"
-                kubeconfig = "${config.KUBECONFIG_FILE}"
               }
               steps {
                 echo 'Building...'
-                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                 echo "RELEASE_PREFIX : ${release_prefix}"
-                echo "Environment : ${kubeconfig.path}"
+                echo "SECRET ${SECRET}"
+                echo "USERNAME ${USERNAME}"
+                echo "VALUES-YAML ${VALUES}"
                 echo "Test ${MELBIN.TEST.SHOULD_FAIL}"
-                // echo "SECRET ${SECRET}"
-                // echo "USERNAME ${USERNAME}"
-                // echo "VALUES-YAML ${VALUES}"
                 sh 'mvn -B -DskipTests clean package'
                 archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
               }
