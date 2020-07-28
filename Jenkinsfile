@@ -19,13 +19,11 @@ pipeline {
             stage('Maven Build') {
               environment {
                 def config = readJSON file: "jenkins-env-${BRANCH_NAME}.json"
-                repository = "${config.REPOSITORY_NAME}"
               }
               steps {
                 echo 'Building...'
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                echo "Branch name: ${BRANCH_NAME}"
-                echo "Environment : ${repository}"
+                echo "Environment : ${config.KUBECONFIG_FILE}"
                 echo "Test ${MELBIN.TEST.SHOULD_FAIL}"
                 // echo "SECRET ${SECRET}"
                 // echo "USERNAME ${USERNAME}"
