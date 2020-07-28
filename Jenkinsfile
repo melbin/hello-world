@@ -23,12 +23,6 @@ pipeline {
                 repository = "${config.REPOSITORY_NAME}"
               }
               steps {
-                loadJsonEnv() {
-                  script {
-                    VERSION_INFORMATION = mavenSemanticVersion("readOnly": true)
-                    sh ' ${VERSION_INFORMATION.artifactId} '
-                  }
-                }
                 echo 'Building...'
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                 echo "File DIR: ${fileName}"
