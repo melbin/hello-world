@@ -27,7 +27,7 @@ pipeline {
                 echo 'Building...'
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                 echo "RELEASE_PREFIX : ${release_prefix}"
-                echo "Environment : ${kubeconfig}"
+                echo "Environment : ${kubeconfig.path}"
                 echo "Test ${MELBIN.TEST.SHOULD_FAIL}"
                 // echo "SECRET ${SECRET}"
                 // echo "USERNAME ${USERNAME}"
