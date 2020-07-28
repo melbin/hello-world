@@ -20,7 +20,7 @@ pipeline {
               environment {
                 def config = readJSON file: 'jenkins-env.json'
                 repository = "${config.default.enviroment.REPOSITORY_NAME}"
-                test = config['development']['enviroment']
+                test = config['default']
               }
               steps {
                 echo 'Building...'
