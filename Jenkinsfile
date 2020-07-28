@@ -24,8 +24,8 @@ pipeline {
               steps {
                 echo 'Building...'
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                echo "Branch name: ${BRANCH_NAME}"
                 echo "RepoName: ${repo_name}"
+                echo "Branch name: ${BRANCH_NAME}"
                 // echo "SECRET ${SECRET}"
                 // echo "USERNAME ${USERNAME}"
                 // echo "VALUES-YAML ${VALUES}"
