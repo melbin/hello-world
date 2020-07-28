@@ -25,9 +25,9 @@ pipeline {
                 echo 'Building...'
                 echo "RELEASE_PREFIX : ${release_prefix}"
                 withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[path: 'secret/melbin/hello-world', secretValues: [[vaultKey: 'password'], [vaultKey: 'username'], [vaultKey: 'values-yaml']]]]) {
-                  echo "Password from Vault:  ${username}"
-                  echo "Password from Vault: ${values-yaml}"
-                  echo "Password from Vault: ${password}"
+                  // echo "Password from Vault:  ${username}"
+                  // echo "Password from Vault: ${values-yaml}"
+                  // echo "Password from Vault: ${password}"
                 }
                 echo "Test ${MELBIN.TEST.SHOULD_FAIL}"
                 sh 'mvn -B -DskipTests clean package'
