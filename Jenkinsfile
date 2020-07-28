@@ -26,7 +26,6 @@ pipeline {
               steps {
                 echo 'Building...'
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                echo "REPO NAME: ${config.REPOSITORY_NAME}"
                 echo "RELEASE_PREFIX : ${release_prefix}"
                 echo "Environment : ${kubeconfig}"
                 echo "Test ${MELBIN.TEST.SHOULD_FAIL}"
