@@ -1,7 +1,7 @@
 {
     "default": {
         "enviroment": {
-            "REPOSITORY_NAME": "hello-world",
+            "REPOSITORY_NAME": "hello-world-v2",
             "HEALTH_CHECK": "samples-micro-test/management/health"
         }
     },
