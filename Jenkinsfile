@@ -20,12 +20,16 @@ pipeline {
               environment {
                 def config = readJSON file: 'jenkins-env.json'
                 repo_name = "${config.default.enviroment.REPOSITORY_NAME}"
+                ORIGIN_BRANCH_NAME = "${env.BRANCH_NAME}"
               }
               steps {
                 echo 'Building...'
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                 echo "RepoName: ${repo_name}"
                 echo "Branch name: ${BRANCH_NAME}"
+                echo "Change Branch name: ${env.CHANGE_BRANCH}"
+                echo "Origin Branch name: ${ORIGIN_BRANCH_NAME}"
+                echo "Test ${MELBIN.TEST.SHOULD_FAIL}"
                 // echo "SECRET ${SECRET}"
                 // echo "USERNAME ${USERNAME}"
                 // echo "VALUES-YAML ${VALUES}"
