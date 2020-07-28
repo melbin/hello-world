@@ -1,4 +1,7 @@
-SITORY_NAME": "samples-micro-test",
+{
+    "default": {
+        "enviroment": {
+            "REPOSITORY_NAME": "samples-micro-test",
             "HEALTH_CHECK": "samples-micro-test/management/health"
         }
     },
@@ -21,56 +24,6 @@ SITORY_NAME": "samples-micro-test",
                 "type": "vault",
                 "path": "ci-cd/docker-registry-development",
                 "key": "docker-credentials-id"
-            },
-            "DOCKER_REGISTRY_URL": {
-                "type": "vault",
-                "path": "ci-cd/docker-registry-development",
-                "key": "docker-url"
-            },
-            "DEPLOYMENT_BASE_URL": {
-                "type": "vault",
-                "path": "bancus/bancus-development",
-                "key": "deployment-base-url"
-            },
-            "GIT_CREDENTIALS": {
-                "type": "vault",
-                "path": "bancus/bancus-development",
-                "key": "jenkins-git-credentials-id"
-            },
-            "GIT_IGNORE_COMMITS_EMAIL": {
-                "type": "vault",
-                "path": "bancus/bancus-development",
-                "key": "jenkins-git-email"
-            },
-            "JIRA_BUILD_SKIP": {
-                "type": "vault",
-                "path": "bancus/bancus-development",
-                "key": "jira-build-skip"
-            },
-            "JIRA_BUILD_SITE": {
-                "type": "vault",
-                "path": "bancus/bancus-development",
-                "key": "jira-build-site"
-            },
-            "JIRA_ENV_ID": {
-                "type": "vault",
-                "path": "bancus/bancus-development",
-                "key": "jira-env-id"
-            },
-            "JIRA_ENV_NAME": {
-                "type": "vault",
-                "path": "bancus/bancus-development",
-                "key": "jira-env-name"
-            },
-            "JIRA_ENV_TYPE": {
-                "type": "vault",
-                "path": "bancus/bancus-development",
-                "key": "jira-env-type"
-            },
-            "SONARQUBE_ENV": {
-                "type": "vault",
-                "path": "bancus/bancus-development",
-                "key": "sonarqube-env"
             }
         }
     },
@@ -93,56 +46,6 @@ SITORY_NAME": "samples-micro-test",
                 "type": "vault",
                 "path": "ci-cd/docker-registry-staging",
                 "key": "docker-credentials-id"
-            },
-            "DOCKER_REGISTRY_URL": {
-                "type": "vault",
-                "path": "ci-cd/docker-registry-staging",
-                "key": "docker-url"
-            },
-            "DEPLOYMENT_BASE_URL": {
-                "type": "vault",
-                "path": "bancus/bancus-staging",
-                "key": "deployment-base-url"
-            },
-            "GIT_CREDENTIALS": {
-                "type": "vault",
-                "path": "bancus/bancus-staging",
-                "key": "jenkins-git-credentials-id"
-            },
-            "GIT_IGNORE_COMMITS_EMAIL": {
-                "type": "vault",
-                "path": "bancus/bancus-staging",
-                "key": "jenkins-git-email"
-            },
-            "JIRA_BUILD_SKIP": {
-                "type": "vault",
-                "path": "bancus/bancus-staging",
-                "key": "jira-build-skip"
-            },
-            "JIRA_BUILD_SITE": {
-                "type": "vault",
-                "path": "bancus/bancus-staging",
-                "key": "jira-build-site"
-            },
-            "JIRA_ENV_ID": {
-                "type": "vault",
-                "path": "bancus/bancus-staging",
-                "key": "jira-env-id"
-            },
-            "JIRA_ENV_NAME": {
-                "type": "vault",
-                "path": "bancus/bancus-staging",
-                "key": "jira-env-name"
-            },
-            "JIRA_ENV_TYPE": {
-                "type": "vault",
-                "path": "bancus/bancus-staging",
-                "key": "jira-env-type"
-            },
-            "SONARQUBE_ENV": {
-                "type": "vault",
-                "path": "bancus/bancus-staging",
-                "key": "sonarqube-env"
             }
         }
     },
@@ -165,59 +68,7 @@ SITORY_NAME": "samples-micro-test",
                 "type": "vault",
                 "path": "ci-cd/docker-registry-production",
                 "key": "docker-credentials-id"
-            },
-            "DOCKER_REGISTRY_URL": {
-                "type": "vault",
-                "path": "ci-cd/docker-registry-production",
-                "key": "docker-url"
-            },
-            "DEPLOYMENT_BASE_URL": {
-                "type": "vault",
-                "path": "bancus/bancus-production",
-                "key": "deployment-base-url"
-            },
-            "GIT_CREDENTIALS": {
-                "type": "vault",
-                "path": "bancus/bancus-production",
-                "key": "jenkins-git-credentials-id"
-            },
-            "GIT_IGNORE_COMMITS_EMAIL": {
-                "type": "vault",
-                "path": "bancus/bancus-production",
-                "key": "jenkins-git-email"
-            },
-            "JIRA_BUILD_SKIP": {
-                "type": "vault",
-                "path": "bancus/bancus-production",
-                "key": "jira-build-skip"
-            },
-            "JIRA_BUILD_SITE": {
-                "type": "vault",
-                "path": "bancus/bancus-production",
-                "key": "jira-build-site"
-            },
-            "JIRA_ENV_ID": {
-                "type": "vault",
-                "path": "bancus/bancus-production",
-                "key": "jira-env-id"
-            },
-            "JIRA_ENV_NAME": {
-                "type": "vault",
-                "path": "bancus/bancus-production",
-                "key": "jira-env-name"
-            },
-            "JIRA_ENV_TYPE": {
-                "type": "vault",
-                "path": "bancus/bancus-production",
-                "key": "jira-env-type"
-            },
-            "SONARQUBE_ENV": {
-                "type": "vault",
-                "path": "bancus/bancus-production",
-                "key": "sonarqube-env"
             }
         }
     }
 }
-
-Deploy') {

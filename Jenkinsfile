@@ -17,9 +17,15 @@ pipeline {
           }
           stages {
             stage('Maven Build') {
+              environment {
+                def config = readJSON file: 'jenkins-env.json'
+                repo_name = "${config.REPOSITORY_NAME}"
+              }
               steps {
                 echo 'Building...'
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+                echo "Branch name: ${env.BRANCH_NAME}"
+                echo "RepoName: ${repo_name}"
                 // echo "SECRET ${SECRET}"
                 // echo "USERNAME ${USERNAME}"
                 // echo "VALUES-YAML ${VALUES}"
@@ -80,8 +86,7 @@ pipeline {
             KUBECONFIG = "/tmp/configs/kubeconfig"
           }
           steps {
-            echo 'Deploying to kubernates'
-            sh "echo 'Upgrading Helm Chart'"
+            sh "echo 'Deploying to kubernates'"
             sh 'sed -i "/appVersion/c\\appVersion: ${PROJECT_VERSION}" k8s/Chart.yaml'
             sh "helm upgrade --install ${env.ARTIFACT_ID} k8s/ -f k8s/values.yaml --set container.image=melbin/${env.ARTIFACT_ID}:${PROJECT_VERSION} --wait --kubeconfig ${KUBECONFIG}"
             script {
