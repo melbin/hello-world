@@ -20,7 +20,7 @@ pipeline {
               environment {
                 def config = readJSON file: "jenkins-env-${BRANCH_NAME}.json"
                 release_prefix = "${config.RELEASE_PREFIX}"
-                SECRET = vault path: 'secrets', key: 'token', vaultUrl: 'http://104.131.1.178:31321/', credentialsId: 's.XRi9IXpPjXc0tqyH1TEvzr7M', engineVersion: "2"
+                SECRET = vault path: 'secrets/melbin/hello-world', key: 'token', vaultUrl: 'http://104.131.1.178:31321/', credentialsId: 's.XRi9IXpPjXc0tqyH1TEvzr7M', engineVersion: "2"
               }
               steps {
                 echo 'Building...'
