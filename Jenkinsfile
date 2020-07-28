@@ -19,12 +19,12 @@ pipeline {
             stage('Maven Build') {
               environment {
                 def config = readJSON file: 'jenkins-env.json'
-                repo_name = "${config.REPOSITORY_NAME}"
+                repo_name = "${config.default.enviroment.REPOSITORY_NAME}"
               }
               steps {
                 echo 'Building...'
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                echo "Branch name: ${env.BRANCH_NAME}"
+                echo "Branch name: ${BRANCH_NAME}"
                 echo "RepoName: ${repo_name}"
                 // echo "SECRET ${SECRET}"
                 // echo "USERNAME ${USERNAME}"
