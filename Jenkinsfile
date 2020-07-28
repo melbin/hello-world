@@ -25,7 +25,7 @@ pipeline {
                 echo 'Building...'
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                 echo "Branch name: ${BRANCH_NAME}"
-                echo ""
+                echo "Environment : ${repository}"
                 echo "Test ${MELBIN.TEST.SHOULD_FAIL}"
                 // echo "SECRET ${SECRET}"
                 // echo "USERNAME ${USERNAME}"
