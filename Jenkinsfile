@@ -88,6 +88,7 @@ pipeline {
             ARTIFACT_ID = readMavenPom().getArtifactId()
             PROJECT_VERSION = readMavenPom().getVersion()
             values = null
+            kubeconfig = null
           }
           steps {
             script {
