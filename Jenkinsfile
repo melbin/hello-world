@@ -89,27 +89,27 @@ pipeline {
             PROJECT_VERSION = readMavenPom().getVersion()
             values = null
             kubeconfig = null
-            KUBECONFIG = "/tmp/config-test/kubeconfig"
           }
           steps {
             script {
-              for (int i = 0; i < 15; i++) {
-                withVault(configuration: [timeout: 60, vaultCredentialId: 'scrum-fu-panda-vault', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[engineVersion: 2, path: 'secret/ScrumFuPanda/virtual-store/hello-world', secretValues: [[vaultKey: 'kubeconfig'], [vaultKey: 'values']]]]) {
-                  if("${values}" != null){
-                    writeFile(file: "values.yaml", text: "${values}")
-                    writeFile(file: "kubeconfig", text: "${kubeconfig}")
+              dir("./tmp") {
+                for (int i = 0; i < 15; i++) {
+                  withVault(configuration: [timeout: 60, vaultCredentialId: 'scrum-fu-panda-vault', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[engineVersion: 2, path: 'secret/ScrumFuPanda/virtual-store/hello-world', secretValues: [[vaultKey: 'kubeconfig'], [vaultKey: 'values']]]]) {
+                    if("${values}" != null){
+                      writeFile(file: "values.yaml", text: "${values}")
+                      writeFile(file: "kubeconfig", text: "${kubeconfig}")
+                    }
                   }
                 }
               }
             }
             sh "echo 'Deploying to kubernates'"
-            // sh "mkdir /tmp/configs"
-            // sh "mv values.yaml kubeconfig /tmp/configs"
+            sh "mv ./tmp /tmp/configs"
             sh 'sed -i "/appVersion/c\\appVersion: ${PROJECT_VERSION}" k8s/Chart.yaml'
             sh "helm upgrade --install ${env.ARTIFACT_ID} k8s/ -f values.yaml --set container.image=melbin/${env.ARTIFACT_ID}:${PROJECT_VERSION} --wait --kubeconfig kubeconfig"
-            // dir("/tmp/configs") {
-            //     deleteDir()
-            // }
+            dir("/tmp/configs") {
+                deleteDir()
+            }
             script {
               for (int i = 0; i < 10; i++) {
                   SERVER_STATUS = sh(returnStdout: true, script: "curl -X GET http://104.131.1.178:30000/hello-world/v1.0.0/test -H 'accept: */*' -s -o health -w '%{http_code}' --max-time 60").trim()
