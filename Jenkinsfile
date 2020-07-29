@@ -87,11 +87,10 @@ pipeline {
           environment {
             ARTIFACT_ID = readMavenPom().getArtifactId()
             PROJECT_VERSION = readMavenPom().getVersion()
-            KUBECONFIG = "/tmp/configs/kubeconfig"
           }
           steps {
             script {
-              withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[engineVersion: 2, path: 'secret/melbin/hello-world', secretValues: [[vaultKey: 'kubeconfig'], [vaultKey: 'values']]]]) {
+              withVault(configuration: [timeout: 60, vaultCredentialId: 'jenkins-vault-approle', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[engineVersion: 2, path: 'secret/ScrumFuPanda/virtual-store/hello-world', secretValues: [[vaultKey: 'kubeconfig'], [vaultKey: 'values']]]]) {
                   writeFile(file: "values.yaml", text: "${values}")
                   writeFile(file: "kubeconfig", text: "${kubeconfig}")
               }
@@ -99,7 +98,7 @@ pipeline {
             sh "echo 'Deploying to kubernates'"
             sh "mv values.yaml kubeconfig /tmp/configs"
             sh 'sed -i "/appVersion/c\\appVersion: ${PROJECT_VERSION}" k8s/Chart.yaml'
-            sh "helm upgrade --install ${env.ARTIFACT_ID} k8s/ -f /tmp/configs/values.yaml --set container.image=melbin/${env.ARTIFACT_ID}:${PROJECT_VERSION} --wait --kubeconfig ${KUBECONFIG}"
+            sh "helm upgrade --install ${env.ARTIFACT_ID} k8s/ -f /tmp/configs/values.yaml --set container.image=melbin/${env.ARTIFACT_ID}:${PROJECT_VERSION} --wait --kubeconfig /tmp/configs/kubeconfig"
             dir("/tmp/configs") {
                 deleteDir()
             }
