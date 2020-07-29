@@ -91,14 +91,13 @@ pipeline {
           }
           steps {
             script {
-              withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[engineVersion: 2, path: 'secret/melbin/hello-world', secretValues: [[vaultKey: 'password'], [vaultKey: 'username'], [vaultKey: 'values']]]]) {
-                dir("./tmp") {
-                    writeFile(file: "values.yaml", text: "${values}")
-                }
+              withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[engineVersion: 2, path: 'secret/melbin/hello-world', secretValues: [[vaultKey: 'kubeconfig'], [vaultKey: 'values']]]]) {
+                  writeFile(file: "values.yaml", text: "${values}")
+                  writeFile(file: "kubeconfig", text: "${kubeconfig}")
               }
             }
             sh "echo 'Deploying to kubernates'"
-            sh "mv ./tmp /tmp/configs"
+            sh "mv values.yaml kubeconfig /tmp/configs"
             sh 'sed -i "/appVersion/c\\appVersion: ${PROJECT_VERSION}" k8s/Chart.yaml'
             sh "helm upgrade --install ${env.ARTIFACT_ID} k8s/ -f /tmp/configs/values.yaml --set container.image=melbin/${env.ARTIFACT_ID}:${PROJECT_VERSION} --wait --kubeconfig ${KUBECONFIG}"
             dir("/tmp/configs") {
