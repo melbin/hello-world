@@ -25,7 +25,7 @@ pipeline {
                 echo 'Building...'
                 echo "RELEASE_PREFIX : ${release_prefix}"
                 script {
-                  withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[path: 'secret/melbin/hello-world', secretValues: [[vaultKey: 'password'], [vaultKey: 'username'], [vaultKey: 'values-yaml']]]]) {
+                  withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[engineVersion: 2, path: 'secret/melbin/hello-world', secretValues: [[vaultKey: 'password'], [vaultKey: 'username'], [vaultKey: 'values-yaml']]]]) {
                     echo "testing from inside vault"
                     echo "Username = ${username}"
                     echo "values.yaml = ${values-yaml}"
