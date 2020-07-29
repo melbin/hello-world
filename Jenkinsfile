@@ -18,19 +18,18 @@ pipeline {
           stages {
             stage('Maven Build') {
               environment {
-                // def config = readJSON file: "jenkins-env-${BRANCH_NAME}.json"
-                def config = readJSON file: "jenkins-env.json", text: "development"
-                release_prefix = "${config.enviroment.RELEASE_PREFIX}"
+                def config = readJSON file: "jenkins-env-${BRANCH_NAME}.json"
+                release_prefix = "${config.RELEASE_PREFIX}"
               }
               steps {
                 echo 'Building...'
                 echo "RELEASE_PREFIX : ${release_prefix}"
                 script {
                   withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[path: 'secret/melbin/hello-world', secretValues: [[vaultKey: 'password'], [vaultKey: 'username'], [vaultKey: 'values-yaml']]]]) {
-                    sh 'echo "testing from inside vault"'
-                    sh 'echo $username'
-                    sh 'echo $values-yaml'
-                    sh 'echo $password'
+                    echo "testing from inside vault"
+                    echo "Username = ${username}"
+                    echo "values.yaml = ${values-yaml}"
+                    echo "password = ${password}"
                   }
                 }
                 echo "Test ${MELBIN.TEST.SHOULD_FAIL}"
