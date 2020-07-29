@@ -89,6 +89,7 @@ pipeline {
             PROJECT_VERSION = readMavenPom().getVersion()
             values = null
             kubeconfig = null
+            KUBECONFIG = "/tmp/config-test/kubeconfig"
           }
           steps {
             script {
