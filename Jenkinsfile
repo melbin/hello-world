@@ -103,13 +103,13 @@ pipeline {
               }
             }
             sh "echo 'Deploying to kubernates'"
-            sh "mkdir /tmp/configs"
-            sh "mv values.yaml kubeconfig /tmp/configs"
+            // sh "mkdir /tmp/configs"
+            // sh "mv values.yaml kubeconfig /tmp/configs"
             sh 'sed -i "/appVersion/c\\appVersion: ${PROJECT_VERSION}" k8s/Chart.yaml'
-            sh "helm upgrade --install ${env.ARTIFACT_ID} k8s/ -f /tmp/configs/values.yaml --set container.image=melbin/${env.ARTIFACT_ID}:${PROJECT_VERSION} --wait --kubeconfig /tmp/configs/kubeconfig"
-            dir("/tmp/configs") {
-                deleteDir()
-            }
+            sh "helm upgrade --install ${env.ARTIFACT_ID} k8s/ -f values.yaml --set container.image=melbin/${env.ARTIFACT_ID}:${PROJECT_VERSION} --wait --kubeconfig kubeconfig"
+            // dir("/tmp/configs") {
+            //     deleteDir()
+            // }
             script {
               for (int i = 0; i < 10; i++) {
                   SERVER_STATUS = sh(returnStdout: true, script: "curl -X GET http://104.131.1.178:30000/hello-world/v1.0.0/test -H 'accept: */*' -s -o health -w '%{http_code}' --max-time 60").trim()
