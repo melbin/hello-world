@@ -24,15 +24,15 @@ pipeline {
               steps {
                 echo 'Building...'
                 echo "RELEASE_PREFIX : ${release_prefix}"
-                script {
-                  withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[engineVersion: 2, path: 'secret/melbin/hello-world', secretValues: [[vaultKey: 'password'], [vaultKey: 'username'], [vaultKey: 'values']]]]) {
-                    echo "testing from inside vault"
-                    echo "Username = ${username}"
-                    echo "values = ${values}"
-                    echo "password = ${password}"
-                  }
-                }
-                echo "Test ${MELBIN.TEST.SHOULD_FAIL}"
+                // script {
+                //   withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[engineVersion: 2, path: 'secret/melbin/hello-world', secretValues: [[vaultKey: 'password'], [vaultKey: 'username'], [vaultKey: 'values']]]]) {
+                //     echo "testing from inside vault"
+                //     echo "Username = ${username}"
+                //     echo "values = ${values}"
+                //     echo "password = ${password}"
+                //   }
+                // }
+                // echo "Test ${MELBIN.TEST.SHOULD_FAIL}"
                 sh 'mvn -B -DskipTests clean package'
                 archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
               }
@@ -90,9 +90,15 @@ pipeline {
             KUBECONFIG = "/tmp/configs/kubeconfig"
           }
           steps {
+            script {
+              withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[engineVersion: 2, path: 'secret/melbin/hello-world', secretValues: [[vaultKey: 'password'], [vaultKey: 'username'], [vaultKey: 'values']]]]) {
+                echo "testing from inside vault - In kubernates Stage"
+                writeFile(file: "values.yaml", text: "${values}")
+              }
+            }
             sh "echo 'Deploying to kubernates'"
             sh 'sed -i "/appVersion/c\\appVersion: ${PROJECT_VERSION}" k8s/Chart.yaml'
-            sh "helm upgrade --install ${env.ARTIFACT_ID} k8s/ -f k8s/values.yaml --set container.image=melbin/${env.ARTIFACT_ID}:${PROJECT_VERSION} --wait --kubeconfig ${KUBECONFIG}"
+            sh "helm upgrade --install ${env.ARTIFACT_ID} k8s/ -f values.yaml --set container.image=melbin/${env.ARTIFACT_ID}:${PROJECT_VERSION} --wait --kubeconfig ${KUBECONFIG}"
             script {
               for (int i = 0; i < 10; i++) {
                   SERVER_STATUS = sh(returnStdout: true, script: "curl -X GET http://104.131.1.178:30000/hello-world/v1.0.0/test -H 'accept: */*' -s -o health -w '%{http_code}' --max-time 60").trim()
