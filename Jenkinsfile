@@ -90,7 +90,7 @@ pipeline {
           }
           steps {
             script {
-              withVault(configuration: [timeout: 60, vaultCredentialId: 'jenkins-vault-approle', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[engineVersion: 2, path: 'secret/ScrumFuPanda/virtual-store/hello-world', secretValues: [[vaultKey: 'kubeconfig'], [vaultKey: 'values']]]]) {
+              withVault(configuration: [timeout: 60, vaultCredentialId: 'scrum-fu-panda-vault', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[engineVersion: 2, path: 'secret/ScrumFuPanda/virtual-store/hello-world', secretValues: [[vaultKey: 'kubeconfig'], [vaultKey: 'values']]]]) {
                   writeFile(file: "values.yaml", text: "${values}")
                   writeFile(file: "kubeconfig", text: "${kubeconfig}")
               }
