@@ -106,7 +106,7 @@ pipeline {
             sh "echo 'Deploying to kubernates'"
             sh "mv ./tmp /tmp/configs"
             sh 'sed -i "/appVersion/c\\appVersion: ${PROJECT_VERSION}" k8s/Chart.yaml'
-            sh "helm upgrade --install ${env.ARTIFACT_ID} k8s/ -f values.yaml --set container.image=melbin/${env.ARTIFACT_ID}:${PROJECT_VERSION} --wait --kubeconfig kubeconfig"
+            sh "helm upgrade --install ${env.ARTIFACT_ID} k8s/ -f /tmp/configs/values.yaml --set container.image=melbin/${env.ARTIFACT_ID}:${PROJECT_VERSION} --wait --kubeconfig /tmp/configs/kubeconfig"
             dir("/tmp/configs") {
                 deleteDir()
             }
