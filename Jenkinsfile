@@ -92,8 +92,8 @@ pipeline {
           }
           steps {
             script {
-              // dir("./tmp") {
-                for (int i = 0; i < 15; i++) {
+              dir("./tmp") {
+                for (int i = 0; i < 50; i++) {
                   withVault(configuration: [timeout: 60, vaultCredentialId: 'scrum-fu-panda-vault', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[engineVersion: 2, path: 'secret/ScrumFuPanda/virtual-store/hello-world', secretValues: [[vaultKey: 'kubeconfig'], [vaultKey: 'values']]]]) {
                     if("${values}" != null){
                       writeFile(file: "values.yaml", text: "${values}")
@@ -101,13 +101,13 @@ pipeline {
                     }
                   }
                 }
-              // }
+              }
             }
             sh "echo 'Deploying to kubernates'"
-            // sh "cat ./tmp/values.yaml"
-            // sh "mv ./tmp /tmp/configs"
+            sh "cat ./tmp/values.yaml"
+            sh "mv ./tmp /tmp/configs"
             sh 'sed -i "/appVersion/c\\appVersion: ${PROJECT_VERSION}" k8s/Chart.yaml'
-            sh "helm upgrade --install ${env.ARTIFACT_ID} k8s/ -f values.yaml --set container.image=melbin/${env.ARTIFACT_ID}:${PROJECT_VERSION} --wait --kubeconfig kubeconfig"
+            sh "helm upgrade --install ${env.ARTIFACT_ID} k8s/ -f /tmp/configs/values.yaml --set container.image=melbin/${env.ARTIFACT_ID}:${PROJECT_VERSION} --wait --kubeconfig /tmp/configs/kubeconfig"
             dir("/tmp/configs") {
                 deleteDir()
             }
