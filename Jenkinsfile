@@ -24,15 +24,6 @@ pipeline {
               steps {
                 echo 'Building...'
                 echo "RELEASE_PREFIX : ${release_prefix}"
-                // script {
-                //   withVault(configuration: [timeout: 60, vaultCredentialId: 'vault-token', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[engineVersion: 2, path: 'secret/melbin/hello-world', secretValues: [[vaultKey: 'password'], [vaultKey: 'username'], [vaultKey: 'values']]]]) {
-                //     echo "testing from inside vault"
-                //     echo "Username = ${username}"
-                //     echo "values = ${values}"
-                //     echo "password = ${password}"
-                //   }
-                // }
-                // echo "Test ${MELBIN.TEST.SHOULD_FAIL}"
                 sh 'mvn -B -DskipTests clean package'
                 archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
               }
@@ -93,7 +84,7 @@ pipeline {
           steps {
             script {
               dir("./tmp") {
-                for (int i = 0; i < 50; i++) {
+                for (int i = 0; i < 15; i++) {
                   withVault(configuration: [timeout: 60, vaultCredentialId: 'scrum-fu-panda-vault', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[engineVersion: 2, path: 'secret/ScrumFuPanda/virtual-store/hello-world', secretValues: [[vaultKey: 'kubeconfig'], [vaultKey: 'values']]]]) {
                     if("${values}" != null){
                       writeFile(file: "values.yaml", text: "${values}")
