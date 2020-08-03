@@ -1,4 +1,4 @@
-name: hello
+name: hello 
 replicaCount: 1
 container:
   name: hello
