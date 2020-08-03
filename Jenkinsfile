@@ -85,7 +85,7 @@ pipeline {
             script {
               dir("./tmp") {
                 for (int i = 0; i < 15; i++) {
-                  withVault(configuration: [timeout: 60, vaultCredentialId: 'scrum-fu-panda-vault', vaultUrl: 'http://104.131.61.124:31321'], vaultSecrets: [[engineVersion: 2, path: 'secret/ScrumFuPanda/virtual-store/hello-world', secretValues: [[vaultKey: 'kubeconfig'], [vaultKey: 'values']]]]) {
+                  withVault(configuration: [timeout: 60, vaultCredentialId: 'scrum-fu-panda-vault', vaultUrl: 'http://104.131.61.124:30241'], vaultSecrets: [[engineVersion: 2, path: 'secret/ScrumFuPanda/virtual-store/hello-world', secretValues: [[vaultKey: 'kubeconfig'], [vaultKey: 'values']]]]) {
                     if("${values}" != null){
                       writeFile(file: "values.yaml", text: "${values}")
                       writeFile(file: "kubeconfig", text: "${kubeconfig}")
