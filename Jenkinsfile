@@ -85,7 +85,7 @@ pipeline {
             script {
               dir("./tmp") {
                 for (int i = 0; i < 15; i++) {
-                  withVault(configuration: [timeout: 60, vaultCredentialId: 'scrum-fu-panda-vault', vaultUrl: 'http://104.131.1.178:31321'], vaultSecrets: [[engineVersion: 2, path: 'secret/ScrumFuPanda/virtual-store/hello-world', secretValues: [[vaultKey: 'kubeconfig'], [vaultKey: 'values']]]]) {
+                  withVault(configuration: [timeout: 60, vaultCredentialId: 'scrum-fu-panda-vault', vaultUrl: 'http://104.131.61.124:31321'], vaultSecrets: [[engineVersion: 2, path: 'secret/ScrumFuPanda/virtual-store/hello-world', secretValues: [[vaultKey: 'kubeconfig'], [vaultKey: 'values']]]]) {
                     if("${values}" != null){
                       writeFile(file: "values.yaml", text: "${values}")
                       writeFile(file: "kubeconfig", text: "${kubeconfig}")
@@ -105,17 +105,17 @@ pipeline {
             }
             script {
               for (int i = 0; i < 10; i++) {
-                  SERVER_STATUS = sh(returnStdout: true, script: "curl -X GET http://104.131.1.178:30000/hello-world/v1.0.0/test -H 'accept: */*' -s -o health -w '%{http_code}' --max-time 60").trim()
+                  SERVER_STATUS = sh(returnStdout: true, script: "curl -X GET http://104.131.61.124:30000/hello-world/v1.0.0/test -H 'accept: */*' -s -o health -w '%{http_code}' --max-time 60").trim()
                   echo "HTTP-${SERVER_STATUS}"
                   if (!SERVER_STATUS.contains('200')) {
-                      echo "We can't reach out the server http://104.131.1.178:30000"
+                      echo "We can't reach out the server http://104.131.61.124:30000"
                       sleep 5
                   }else{
                       break;
                   }
               }
               if (!SERVER_STATUS.contains('200')) {
-                  error("We can't reach out the server http://104.131.1.178:30000")
+                  error("We can't reach out the server http://104.131.61.124:30000")
               }
             }
           }
