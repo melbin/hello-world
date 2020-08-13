@@ -27,4 +27,9 @@ spec:
             value: b3
         ports:
         - containerPort: {{ .Values.container.port}}
+        resources:
+          limits:
+            cpu:100m
+          requests:
+             cpu:50m
 
