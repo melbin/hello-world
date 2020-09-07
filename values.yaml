@@ -11,4 +11,3 @@ service:
   nodePort: 30000
   selector:
     type: NodePort
-
