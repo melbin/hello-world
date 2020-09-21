@@ -29,7 +29,7 @@ spec:
         - containerPort: {{ .Values.container.port}}
         resources:
           limits:
-            cpu: 100m
+            cpu: 1000m
           requests:
             cpu: 50m
 
