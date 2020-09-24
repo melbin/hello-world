@@ -22,7 +22,7 @@ pipeline {
                 release_prefix = "${config.RELEASE_PREFIX}"
               }
               steps {
-                echo 'Building... '
+                echo 'Building...'
                 echo "RELEASE_PREFIX : ${release_prefix}"
                 sh 'mvn -B -DskipTests clean package'
                 archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
