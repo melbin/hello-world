@@ -18,7 +18,7 @@ pipeline {
           stages {
             stage('Maven Build') {
               environment {
-                def config = readJSON file: "jenkins-env-${BRANCH_NAME}.json"
+                def config = readJSON file: "jenkins-env-${GIT_BRANCH.split("/")[1]}.json"
                 release_prefix = "${config.RELEASE_PREFIX}"
               }
               steps {
