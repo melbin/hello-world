@@ -48,7 +48,7 @@ public class HomeController {
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public String test() {
 		logger.info("Test Method was called");
-		return "v1.2.17";
+		return "v1.2.18";
 	}
 	
 	@RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json")
