@@ -1,11 +1,15 @@
 {
     "default": {
         "enviroment": {
+<<<<<<< HEAD
             "REPOSITORY_NAME": "samples-micro-test-2",
+=======
+            "REPOSITORY_NAME": "hello-world",
+>>>>>>> development
             "HEALTH_CHECK": "samples-micro-test/management/health"
         }
     },
-    "dev": {
+    "development": {
         "enviroment" : {
             "RELEASE_PREFIX": "-alpha"
         },

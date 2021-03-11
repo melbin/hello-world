@@ -1,0 +1,20 @@
+{
+    "REPOSITORY_NAME": "hello-world",
+    "HEALTH_CHECK": "samples-micro-test/management/health",
+    "RELEASE_PREFIX": "-alpha",        
+    "VALUES_FILE": {
+        "type": "vault",
+        "path": "bancus/samples-micro-test-development",
+        "key": "values-yaml"
+    },
+    "KUBECONFIG_FILE": {
+        "type": "vault",
+        "path": "ci-cd/k8s-config-development",
+        "key": "kubeconfig"
+    },
+    "REGISTRY_CREDENTIALS_ID": {
+        "type": "vault",
+        "path": "ci-cd/docker-registry-development",
+        "key": "docker-credentials-id"
+    }
+}
