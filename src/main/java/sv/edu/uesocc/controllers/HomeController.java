@@ -57,7 +57,7 @@ public class HomeController {
 		logger.info("Defaut POST method!!!");
 		logger.info("Person: "+person.toString());
 		ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:8080/hello-world/v1.0.0/chaining", String.class);
-		return "Welcome "+person.getName();
+		return "Welcome  "+person.getName();
 	}
 	
     @RequestMapping("/chaining")
