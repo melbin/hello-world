@@ -35,7 +35,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String hi() {
-		logger.info("Default GET method, this will be printed on console v2");
+		logger.info("Default GET method, this will be printed on console v3");
 		try {
 			throw new SQLDataException();
 		}catch(Exception e) {
